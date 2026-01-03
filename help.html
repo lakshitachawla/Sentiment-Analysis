@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senti.co | Help Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --light-grey: #fafafa;
+            --font-label: #303f8e;
+            --nav-black: #292929;
+            --primary-dark: #182572;
+            --primary-light: #4e9ca4;
+            --yellow-accent: #f8b237;
+            --grey-username: #8a8a8a;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-grey);
+            color: var(--nav-black);
+        }
+        .text-nav-dark { color: var(--nav-black); }
+        .text-username { color: var(--grey-username); }
+        .text-primary-label { color: var(--font-label); }
+        .bg-primary-dark { background-color: var(--primary-dark); }
+        .bg-primary-light { background-color: var(--primary-light); }
+        .btn-yellow { background-color: var(--yellow-accent); color: var(--primary-dark); }
+        .sentiment-gradient {
+            background-image: linear-gradient(to right, var(--primary-dark), var(--primary-light));
+        }
+        .accordion-header {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="{{ url_for('serve_help') }}" class="h-8 w-24 flex items-center">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Senti.co Logo" class="h-full object-contain">
+                    </a>
+                </div>
+
+                <div class="hidden sm:flex items-center space-x-8">
+                    <a href="{{ url_for('serve_index') }}" class="text-nav-dark font-medium hover:border-b-2 hover:border-nav-dark pb-1">HOME</a>
+                    <a href="{{ url_for('serve_dashboard') }}" class="text-nav-dark font-medium hover:border-b-2 hover:border-nav-dark pb-1">DASHBOARD</a>
+                    <a href="{{ url_for('serve_use_cases') }}" class="text-nav-dark font-medium hover:border-b-2 hover:border-nav-dark pb-1">USE CASES</a>
+                    <a href="{{ url_for('serve_help') }}" class="text-nav-dark font-semibold border-b-2 border-nav-dark pb-1">HELP</a>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <div class="text-right hidden sm:block">
+                        <span id="nav-user-name" class="block text-nav-dark text-sm font-semibold">Guest User</span>
+                        <a id="nav-user-action" href="{{ url_for('serve_login') }}" class="block text-xs text-username hover:text-primary-dark transition-colors cursor-pointer">Sign up / Login</a>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
+                        <img id="nav-profile-pic" src="{{ url_for('static', filename='images/profile-pic.png') }}" alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Header of the Help Page -->
+    <header class="sentiment-gradient text-white pt-16 pb-20 shadow-lg mb-10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-4">
+                Senti.co Support & FAQ
+            </h1>
+            <p class="text-xl opacity-90 max-w-2xl mx-auto">
+                Find quick answers about how our service works, what languages we support, and our commitment to your data security.
+            </p>
+        </div>
+    </header>
+
+    <!-- Frequently asked Questions -->
+    <main class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+        <h2 class="text-3xl font-bold text-center mb-8 text-primary-label">Frequently Asked Questions</h2>
+        <div id="faq-accordion" class="space-y-4 max-w-4xl mx-auto">
+            <!-- FAQ: First Question -->
+            <div class="accordion-item bg-white rounded-xl shadow-lg border border-gray-100">
+                <div class="accordion-header flex justify-between items-center p-5">
+                    <h3 class="text-lg font-semibold text-nav-dark">How does Senti.co calculate sentiment scores?</h3>
+                    <i data-lucide="chevron-down" class="w-6 h-6 text-gray-500 transition-transform duration-300"></i>
+                </div>
+                <div class="accordion-content px-5 bg-gray-50 rounded-b-xl border-t border-gray-100">
+                    <p class="text-gray-700">We teach the computer to understand human emotion. Senti.co uses a carefully developed and highly secure system that processes text to accurately categorize the core feeling (Positive, Negative, or Neutral). It's far more accurate than just searching for simple keywords.</p>
+                </div>
+            </div>
+            <!-- FAQ: Second Question -->
+            <div class="accordion-item bg-white rounded-xl shadow-lg border border-gray-100">
+                <div class="accordion-header flex justify-between items-center p-5">
+                    <h3 class="text-lg font-semibold text-nav-dark">What languages does Senti.co support?</h3>
+                    <i data-lucide="chevron-down" class="w-6 h-6 text-gray-500 transition-transform duration-300"></i>
+                </div>
+                <div class="accordion-content px-5 bg-gray-50 rounded-b-xl border-t border-gray-100">
+                    <p class="text-gray-700">Currently, our primary focus is on English, where our accuracy is highest. We are actively testing and expanding our support to include other major languages, such as Spanish, German, and French.</p>
+                </div>
+            </div>
+            <!-- FAQ: Third Question -->
+            <div class="accordion-item bg-white rounded-xl shadow-lg border border-gray-100">
+                <div class="accordion-header flex justify-between items-center p-5">
+                    <h3 class="text-lg font-semibold text-nav-dark">Is my data secure and private?</h3>
+                    <i data-lucide="chevron-down" class="w-6 h-6 text-gray-500 transition-transform duration-300"></i>
+                </div>
+                <div class="accordion-content px-5 bg-gray-50 rounded-b-xl border-t border-gray-100">
+                    <p class="text-gray-700">Your security and privacy are our top priority. We use industry-standard encryption for all data transfer. Furthermore, user account details and passwords are securely hashed using a robust backend (Flask and MySQL) before they are stored.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Email to Support Team Section -->
+        <section class="mt-16 text-center">
+            <h2 class="text-3xl font-bold mb-6 text-primary-label">Still Have Questions? We're Here to Help.</h2>
+            <div class="max-w-md mx-auto p-8 bg-primary-dark text-white rounded-xl shadow-2xl">
+                <i data-lucide="mail" class="w-10 h-10 mx-auto mb-4 text-yellow-accent"></i>
+                <p class="text-xl font-semibold mb-2">Contact Customer Support</p>
+                <p class="text-gray-300 mb-6 text-sm">Our support team is ready to help you with any questions about Senti.co, from account access to detailed analysis queries.</p>
+                <a href="mailto:support@senti.co?subject=Support%20Request%20from%20Website&body=Please%20describe%20your%20issue%20here." 
+                class="w-full py-3 btn-yellow font-bold rounded-lg shadow-md transition duration-200 flex items-center justify-center">
+                    <span class="mr-2">Email Our Team</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer of the Page -->
+    <footer class="mt-12 py-8 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
+            &copy; 2025 Senti.co. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Store URL paths from Jinja into JS variables
+        const DASHBOARD_URL = "{{ url_for('serve_dashboard') }}";
+        const LOGIN_URL = "{{ url_for('serve_login') }}";
+        const LOGOUT_URL = "{{ url_for('logout_user') }}";
+        const DEFAULT_PROFILE_PIC = "{{ url_for('static', filename='images/profile-pic.png') }}";
+
+        // Fetching user info from backend
+        async function fetchUserInfo() {
+            try {
+                const res = await fetch('/api/userinfo');
+                return await res.json();
+            } catch (err) {
+                console.error("Error fetching user info:", err);
+                return { logged_in: false };
+            }
+        }
+
+        async function updateUserInfo() {
+            const userNameEl = document.getElementById('nav-user-name');
+            const userActionEl = document.getElementById('nav-user-action');
+            const getStartedBtn = document.getElementById('get-started-btn');
+            const profilePicEl = document.getElementById('nav-profile-pic');
+            
+            const userData = await fetchUserInfo();
+
+            if (userData.logged_in) {
+                // User is logged in
+                userNameEl.textContent = userData.name || 'User'; 
+                userActionEl.textContent = 'Logout';
+                userActionEl.href = LOGOUT_URL; // Link to the Flask logout route
+                getStartedBtn.href = DASHBOARD_URL; // Link 'Get Started' to dashboard
+                if (userData.profile_pic) {
+                     profilePicEl.src = userData.profile_pic;
+                }
+            } else {
+                // User is a guest
+                userNameEl.textContent = 'Guest User';
+                userActionEl.textContent = 'Login';
+                userActionEl.href = LOGIN_URL; // Link to the Flask login route
+                getStartedBtn.href = LOGIN_URL; // Link 'Get Started' to login
+                profilePicEl.src = DEFAULT_PROFILE_PIC;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', updateUserInfo);
+        
+        // JavaScript for Accordion Functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            
+            const items = document.querySelectorAll('.accordion-item');
+
+            items.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const icon = header.querySelector('i');
+                
+                header.addEventListener('click', () => {
+                    // Close all other open items
+                    items.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('i').classList.remove('rotate-180');
+                        }
+                    });
+
+                    // Toggle the clicked item
+                    item.classList.toggle('active');
+
+                    // Toggle the chevron icon rotation
+                    if (item.classList.contains('active')) {
+                        icon.classList.add('rotate-180');
+                    } else {
+                        icon.classList.remove('rotate-180');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

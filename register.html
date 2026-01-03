@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senti.co | Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'website-bg': '#fafafa',
+                        'primary-dark': '#182572', 
+                        'accent-yellow': '#f8b237',
+                        'label-indigo': '#303f8e', 
+                        'primary-light': '#4e9ca4',
+                    },
+                    backgroundImage: {
+                        'register-gradient': 'linear-gradient(135deg, #182572, #4e9ca4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #fafafa;
+            overflow-y: hidden; 
+        }
+        .register-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem; 
+        }
+        .max-h-card {
+            max-height: 90vh; 
+            height: 90vh; 
+        }
+        .form-input {
+            padding: 1rem; 
+            height: 3.5rem; 
+        }
+        .form-label {
+            margin-bottom: 0.5rem; 
+        }
+        .illustration-panel {
+            height: 100%; 
+            position: relative;
+            overflow: hidden; 
+        }
+    </style>
+</head>
+<body class="bg-website-bg">
+
+    <div class="register-container">
+        <div class="flex flex-col lg:flex-row w-full max-w-7xl max-h-card rounded-2xl overflow-hidden shadow-2xl">
+            <!-- Left Part: Register Page -->
+            <div class="lg:w-1/2 flex flex-col justify-center items-center p-8 lg:p-12 bg-white order-1 lg:order-1">
+                <div class="w-full max-w-lg">
+                    <div class="text-left w-full">
+                        <a href="{{ url_for('serve_index') }}" class="h-8 w-24 flex items-center mb-10">
+                            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Senti.co Logo" class="h-full object-contain">
+                        </a>
+                    </div>
+
+                    <h1 class="text-3xl font-extrabold mb-1 text-primary-dark">Nice to meet you!</h1>
+                    <p class="text-base font-medium opacity-90 mb-8 text-primary-dark">Let's Register Your Account</p>
+                    <!-- Register Form -->
+                    <form id="register-form" method="POST" action="{{ url_for('serve_register') }}">
+                        <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+                            
+                            <div>
+                                <label for="name" class="block text-sm font-semibold form-label" style="color: #303f8e;">Name</label>
+                                <input type="text" id="name" name="name"
+                                        class="w-full rounded-xl border-2 border-gray-300 focus:ring-primary-dark focus:border-primary-dark text-gray-800 transition duration-150 form-input" required>
+                            </div>
+                            
+                            <div>
+                                <label for="username" class="block text-sm font-semibold form-label" style="color: #303f8e;">UserName</label>
+                                <input type="text" id="username" name="username"
+                                        class="w-full rounded-xl border-2 border-gray-300 focus:ring-primary-dark focus:border-primary-dark text-gray-800 transition duration-150 form-input" required>
+                            </div>
+                            
+                            <div>
+                                <label for="phone" class="block text-sm font-semibold form-label" style="color: #303f8e;">Phone Number</label>
+                                <input type="tel" id="phone" name="phone"
+                                        class="w-full rounded-xl border-2 border-gray-300 focus:ring-primary-dark focus:border-primary-dark text-gray-800 transition duration-150 form-input">
+                                </div>
+                            
+                            <div>
+                                <label for="email" class="block text-sm font-semibold form-label" style="color: #303f8e;">Email</label>
+                                <input type="email" id="email" name="email"
+                                        class="w-full rounded-xl border-2 border-gray-300 focus:ring-primary-dark focus:border-primary-dark text-gray-800 transition duration-150 form-input" required>
+                            </div>
+
+                            <div>
+                                <label for="password" class="block text-sm font-semibold form-label" style="color: #303f8e;">Password</label>
+                                <input type="password" id="password" name="password"
+                                        class="w-full rounded-xl border-2 border-gray-300 focus:ring-primary-dark focus:border-primary-dark text-gray-800 transition duration-150 form-input" required>
+                            </div>
+                            
+                            <div>
+                                <label for="confirm_password" class="block text-sm font-semibold form-label" style="color: #303f8e;">Confirm Password</label>
+                                <input type="password" id="confirm_password" name="confirm_password"
+                                        class="w-full rounded-xl border-2 border-gray-300 focus:ring-primary-dark focus:border-primary-dark text-gray-800 transition duration-150 form-input" required>
+                            </div>
+                        </div>
+                        <!-- Url to switch to Login Page -->
+                        <div class="mt-8 flex items-center justify-between">
+                            <div class="text-sm">
+                                <span class="text-gray-600">Already have an account?</span>
+                                <a href="{{ url_for('serve_login') }}" class="ml-1 font-semibold text-primary-dark underline hover:text-accent-yellow transition duration-150">
+                                    Login Now
+                                </a>
+                            </div>
+
+                            <button type="submit" 
+                                     class="py-3 px-8 bg-accent-yellow text-black font-bold text-xl rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition duration-300">
+                                Register
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Right Part - Register Page -->
+            <div class="lg:w-1/2 bg-register-gradient order-2 lg:order-2 illustration-panel p-0 flex justify-center items-center">
+                <img src="{{ url_for('static', filename='images/illustration_register.png') }}" alt="Register Illustration" 
+                    class="w-full h-full object-cover">
+            </div>
+        </div>
+    </div>
+
+    <div id="custom-alert" class="fixed top-[-100px] left-1/2 transform -translate-x-1/2 p-4 rounded-b-lg shadow-xl text-white font-semibold z-50 transition-all duration-300"></div>
+
+    <script>
+        //Flask flash messages to JavaScript
+        const flashMessages = [
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        { msg: "{{ message | safe }}", cat: "{{ category }}" },
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        ];
+
+        // Custom alert function
+        function alertMessage(message, category) {
+            const messageBox = document.getElementById('custom-alert');
+            
+            let colorClass = 'bg-gray-700'; 
+            if (category === 'error') {
+                colorClass = 'bg-red-500';
+            } else if (category === 'warning') {
+                colorClass = 'bg-yellow-500';
+            } else if (category === 'success') {
+                colorClass = 'bg-green-600';
+            } else if (category === 'info') {
+                colorClass = 'bg-blue-500';
+            }
+
+            messageBox.className = `fixed top-0 left-1/2 transform -translate-x-1/2 p-4 rounded-b-lg shadow-xl text-white font-semibold z-50 transition-all duration-300 ${colorClass}`;
+            messageBox.textContent = message;
+            messageBox.style.top = '0'; 
+
+            setTimeout(() => {
+                messageBox.style.top = '-100px'; 
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (flashMessages.length > 0) {
+                const { msg, cat } = flashMessages[0];
+                alertMessage(msg, cat);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senti.co | Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'website-bg': '#fafafa',
+                        'primary-dark': '#182572', 
+                        'accent-yellow': '#f8b237', 
+                        'label-indigo': '#303f8e',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #fafafa;
+        }
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .max-h-card {
+            max-height: 90vh;
+        }
+    </style>
+
+</head>
+<body class="bg-website-bg">
+
+    <div class="login-container">
+        <div class="flex flex-col lg:flex-row w-full max-w-7xl max-h-card rounded-2xl overflow-hidden shadow-2xl">
+            <!-- Left part - Login Page  -->
+            <div class="lg:w-1/2 flex flex-col items-center p-8 lg:p-16 bg-white order-2 lg:order-1">
+                <div class="text-left w-full">
+                    <a href="{{ url_for('serve_index') }}" class="h-8 w-24 flex items-center mb-10">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Senti.co Logo" class="h-full object-contain">
+                    </a>
+                </div>
+                <img src="{{ url_for('static', filename='images/illustration_login.png') }}" alt="Login Illustration" 
+                    class="w-full max-w-md h-auto object-contain flex-grow mt-4">
+            </div>
+            <!-- Right part- Login Page -->
+            <div class="lg:w-1/2 flex flex-col justify-center items-center p-8 lg:p-16 bg-primary-dark text-white order-1 lg:order-2">
+                <div class="w-full max-w-sm">
+                    <h1 class="text-4xl font-extrabold mb-3">Hello!</h1>
+                    <h1 class="text-4xl font-extrabold mb-3">Welcome back!!</h1>
+                    <p class="text-lg font-medium opacity-90 mb-10">Let's Login to Your Account</p>
+                    <!-- Login Form -->
+                    <form id="login-form" method="POST" action="{{ url_for('serve_login') }}" class="space-y-8">
+                        <div>
+                            <label for="identifier" class="block text-sm font-semibold mb-2">Username or Email</label>
+                            <input type="text" id="identifier" name="identifier" placeholder="Enter your username or email"
+                                   class="w-full p-4 rounded-xl border-2 border-white focus:ring-accent-yellow focus:border-accent-yellow text-gray-800 transition duration-150" required>
+                        </div>
+
+                        <div>
+                            <label for="password" class="block text-sm font-semibold mb-2">Password</label>
+                            <input type="password" id="password" name="password" placeholder="••••••••"
+                                   class="w-full p-4 rounded-xl border-2 border-white focus:ring-accent-yellow focus:border-accent-yellow text-gray-800 transition duration-150" required>
+                        </div>
+
+                        <button type="submit" 
+                                 class="w-full mt-4 py-4 bg-accent-yellow text-black font-bold text-xl rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition duration-300">
+                            Login
+                        </button>
+                    </form>
+                    <!-- Link to Register User Page -->
+                    <div class="text-center mt-8 text-sm">
+                        <span class="opacity-80">Don't have an account?</span>
+                        <a href="{{ url_for('serve_register') }}" 
+                        class="ml-1 font-semibold underline hover:text-accent-yellow transition duration-150">
+                        Register now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="custom-alert" class="fixed top-[-100px] left-1/2 transform -translate-x-1/2 
+        p-4 rounded-b-lg shadow-xl text-white font-semibold z-50 transition-all duration-300"></div>
+
+    <script>
+        // Flash messages for Flask
+        const flashMessages = [
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        // Format: { msg: "message text", cat: "error" }
+                        { msg: "{{ message | safe }}", cat: "{{ category }}" },
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        ];
+
+        // Custom alert function
+        function alertMessage(message, category) {
+            const box = document.getElementById('custom-alert');
+            
+            let colorClass = 'bg-gray-700'; // Default
+            if (category === 'error') {
+                colorClass = 'bg-red-500';
+            } else if (category === 'warning') {
+                colorClass = 'bg-yellow-500';
+            } else if (category === 'success') {
+                colorClass = 'bg-green-600';
+            } else if (category === 'info') {
+                colorClass = 'bg-blue-500';
+            }
+
+            box.className = `fixed top-0 left-1/2 transform -translate-x-1/2 
+                             p-4 rounded-b-lg shadow-xl text-white font-semibold z-50 
+                             transition-all duration-300 ${colorClass}`;
+            box.textContent = message;
+            box.style.top = '0';
+            setTimeout(() => { box.style.top = '-100px'; }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for and display any Flask flash messages immediately on load
+            if (flashMessages.length > 0) {
+                const { msg, cat } = flashMessages[0];
+                alertMessage(msg, cat);
+            }
+        });
+    </script>
+</body>
+</html>
