@@ -57,7 +57,9 @@ Senti.co implements enterprise-standard security protocols:
 
 ### Prerequisites
 
-* Python 3.x
+* Python 3.9+
+* MySQL Server: Ensure you have a running MySQL instance.
+* NLTK Data: The application requires specific NLTK corpora for text processing.
 * Pip (Python Package Manager)
 
 ### Installation
